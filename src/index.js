@@ -1,17 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux';
+import { createRoot } from 'react-dom/client';
+import { createStore } from 'redux';
+import movieReducer from './reducers/movieReducer';
+import { addMovie } from './actions/movieAction';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+const container = document.getElementById('root');
+const root = createRoot(container);
+
+const store = createStore(
+  movieReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+store.subscribe(() => console.log('store uppdaterades'), store.getState());
+
+// store.dispatch(addMovie());
+
+root.render(
+  <Provider store={store}>
+    <App />
+  </Provider>
+);
+
+export default store;
