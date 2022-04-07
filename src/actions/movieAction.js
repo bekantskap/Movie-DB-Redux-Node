@@ -21,13 +21,8 @@ const removeMovie = id => ({
   payload: id,
 });
 
-const addReview = m => ({
+const addReview = x => ({
   type: 'ADD_REVIEW',
-  payload: {
-    id: m.id,
-    review: m.review,
-    rating: m.rating,
-  },
 });
 
 export { removeMovie, addMovie, addReview };

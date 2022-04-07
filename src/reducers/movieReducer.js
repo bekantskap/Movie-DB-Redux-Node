@@ -4,7 +4,6 @@ const initialState = {
 
 const movieReducer = (state = initialState, action) => {
   let index = state.movieStore.findIndex(dup => dup.id == action.payload.id);
-
   switch (action.type) {
     case 'ADD_MOVIE':
       return {
@@ -24,18 +23,18 @@ const movieReducer = (state = initialState, action) => {
       };
 
     case 'ADD_REVIEW': {
-      const key = action.payload.id - 1;
       return {
         ...state,
-        movieStore: {
-          ...state.movieStore,
-          [key]: {
-            ...state.movieStore[key],
-            review: action.payload.review,
-            rating: action.payload.rating,
-            rated: true,
-          },
-        },
+        movieStore: state.movieStore.map(movie =>
+          movie.id === action.payload.id
+            ? {
+                ...movie,
+                review: action.payload.review,
+                rating: action.payload.rating,
+                rated: action.payload.rated,
+              }
+            : movie
+        ),
       };
     }
 

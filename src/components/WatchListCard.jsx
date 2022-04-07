@@ -1,13 +1,13 @@
 import { useContext } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { removeMovie } from '../actions/movieAction';
 import { MovieContext } from '../App';
 
 export default function WatchListCard(props) {
-  console.log(props.movie);
+  const m = props.movie;
   const dispatch = useDispatch();
-  const id = props.movie.id;
+  const id = m.id;
 
   const x = useContext(MovieContext);
 
@@ -15,21 +15,34 @@ export default function WatchListCard(props) {
     dispatch(removeMovie(id));
   };
 
-  const setReviewId = id => {
-    x.setMovie(id)
-  }
+  const setMovieHandler = () => {
+    x.setMovieId(id);
+  };
 
   return (
-    <article>
-      <p>{props.movie.title}</p>
-      <Link to="/writereviews">
-        <input type="button" onClick={() => setReviewId(id)} value="Write Review"></input>
-      </Link>
-      <input
-        type="button"
-        value="Remove Movie"
-        onClick={() => removeMovieHandler(id)}
-      ></input>
+    <article className="watch-list__info">
+      <h2>{props.movie.title}</h2>
+      <img
+        className="watch-list__img"
+        src={props.movie.posterUrl}
+        alt="movie poster"
+      ></img>
+      <section className="watch-list__btns">
+        <Link to="/writereviews">
+          <input
+            className="yellow-btn"
+            type="button"
+            onClick={() => setMovieHandler()}
+            value="Write Review"
+          ></input>
+        </Link>
+        <input
+          className="yellow-btn"
+          type="button"
+          value="Remove Movie"
+          onClick={() => removeMovieHandler(id)}
+        ></input>
+      </section>
     </article>
   );
 }

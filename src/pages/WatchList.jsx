@@ -9,10 +9,12 @@ export default function WatchList() {
 
   return (
     <main>
-      <h2>Watch List</h2>
-      {movie.map((mov, index) => {
-        return <WatchListCard movie={mov} key={index} />;
-      })}
+      <h2 className="watch-list__header">Watch List</h2>
+      <div className="watch-list__container">
+        {movie.map((mov, index) => {
+          return <WatchListCard movie={mov} key={index} />;
+        })}
+      </div>
     </main>
   );
 }

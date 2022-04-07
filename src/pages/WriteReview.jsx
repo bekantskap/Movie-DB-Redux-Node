@@ -1,46 +1,52 @@
-import React, { useContext, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import store from '..';
-import { addReview } from '../actions/movieAction';
 import { MovieContext } from '../App';
 import StarRating from '../components/StarRating';
 
 export default function WriteReviews() {
-  const [review, setReview] = useState('');
   const textInput = React.createRef();
 
   const x = useContext(MovieContext);
 
-  const clickHandler = () => {
-    store.dispatch(addReviewHandler(review));
-  };
-
   const changeHandler = () => {
-    setReview(textInput.current.value);
+    x.setReview(textInput.current.value);
   };
 
-  const addReviewHandler = review => {
-    console.log(review);
+  const clickHandler = () => {
+    store.dispatch(addReviewHandler());
+  };
+
+  const addReviewHandler = () => {
     return {
       type: 'ADD_REVIEW',
       payload: {
-        id: x.movie,
-        review: review,
+        id: x.movieId,
+        review: x.review,
         rating: x.rating,
+        rated: true,
       },
     };
   };
 
-  console.log(review);
   return (
-    <article>
-      <div>
-        <form>
-          <input onChange={changeHandler} ref={textInput} type="text" />
-          <button type="button" onClick={clickHandler}>
-            Click Here
-          </button>
+    <article className="write-review__container">
+      <div className="write-review__wrapper">
+        <form className="write-review__form">
+          <h2>Write Review</h2>
+          <textarea
+            className="write-review__text-box"
+            onChange={changeHandler}
+            ref={textInput}
+            placeholder={'Write something about ' + x.movie.title}
+            type="text"
+          />
           <StarRating />
+          <Link to="/">
+            <button className="yellow-btn" type="button" onClick={clickHandler}>
+              Submit Review
+            </button>
+          </Link>
         </form>
       </div>
     </article>

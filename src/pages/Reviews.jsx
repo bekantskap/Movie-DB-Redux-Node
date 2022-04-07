@@ -7,15 +7,15 @@ export default function Reviews() {
     return state.movieStore;
   });
 
+  const filteredReviewedMovies = reviewedMovies.filter(
+    movie => movie.rated !== false
+  );
+
   return (
-    <div>
-      {reviewedMovies
-        .filter(movie => (movie.rated = true))
-        .map(filteredMovie => (
-          <li>
-            <ReviewCard movie={filteredMovie} />
-          </li>
-        ))}
+    <div className="review-container">
+      {filteredReviewedMovies.map((filteredMovie, index) => (
+        <ReviewCard movie={filteredMovie} key={index} />
+      ))}
     </div>
   );
 }

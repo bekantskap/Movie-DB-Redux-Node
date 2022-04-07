@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
 import { Provider } from 'react-redux';
 import { createRoot } from 'react-dom/client';
@@ -16,7 +15,7 @@ const store = createStore(
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
-store.subscribe(() => console.log('store uppdaterades'), store.getState());
+store.subscribe(() => store.getState());
 
 // store.dispatch(addMovie());
 
